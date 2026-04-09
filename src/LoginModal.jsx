@@ -1,4 +1,15 @@
+
+import {useState} from "react"; 
 function LoginModal({ setIsModalOpen }) {
+    const [email,setEmail] = useState("");
+    const [password,setPassword] = useState("");
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      console.log("Sunucuya Gönderilecek E-Posta:", email);
+    console.log("Sunucuya Gönderilecek Şifre:", password);
+    };
+    console.log("Anlık Email State'i:", email);
+console.log("Anlık Şifre State'i:", password);
     return(
         <div id="girisKutusu" className="fixed  z-50 inset-0 bg-black/80">
         <div className="flex justify-center items-center w-full h-full">
@@ -20,14 +31,16 @@ function LoginModal({ setIsModalOpen }) {
               <form className="flex flex-col gap-4 w-full mb-8">
                 <input
                   type="email"
-                  id="kullanici"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   placeholder="Kullanıcı Adı"
                   className="p-3 rounded-xl outline-none"
                 />
   
                 <input
                   type="password"
-                  id="sifreGiris"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   placeholder="Şifrenizi Giriniz"
                   className="p-3 rounded-xl outline-none"
                 />
@@ -52,7 +65,7 @@ function LoginModal({ setIsModalOpen }) {
               <h3 className="text-3xl font-bold mb-6 text-gray-900 font-[monaco]">
                 Kayıt Ol
               </h3>
-              <form className="flex flex-col gap-4 w-full mb-8">
+              <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-full mb-8">
                 <input
                   type="email"
                   id="kullaniciKayit"
