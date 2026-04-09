@@ -3,6 +3,7 @@ import {useState} from "react";
 function LoginModal({ setIsModalOpen }) {
     const [email,setEmail] = useState("");
     const [password,setPassword] = useState("");
+    const [isLoginView,setIsLoginView] = useState("true");
     const handleSubmit = (e) => {
       e.preventDefault();
       console.log("Sunucuya Gönderilecek E-Posta:", email);
@@ -23,8 +24,7 @@ console.log("Anlık Şifre State'i:", password);
             >
               X
             </button>
-  
-            <div id="alanGiris" className="w-full flex flex-col items-center">
+  {isLoginView ? (<div id="alanGiris" className="w-full flex flex-col items-center">
               <h3 className="text-3xl font-bold mb-6 text-gray-900 font-[monaco]">
                 Giriş Yap
               </h3>
@@ -54,14 +54,16 @@ console.log("Anlık Şifre State'i:", password);
                 </button>
               </form>
               <a
-                href="#"
-                id="linkKaydol"
-                className="text-sm text-center text-gray-800 hover:underline"
-                >Hesabınız yoksa oluşturun</a
-              >
-            </div>
-  
-            <div id="alanKayit" className="w-full flex-col items-center hidden">
+  href="#"
+  onClick={(e) => { 
+    e.preventDefault(); 
+    setIsLoginView(false); 
+  }}
+  className="text-sm text-center text-gray-800 hover:underline"
+>
+  Hesabınız yoksa oluşturun
+</a>
+            </div> ):(<div id="alanKayit" className="w-full flex-col items-center">
               <h3 className="text-3xl font-bold mb-6 text-gray-900 font-[monaco]">
                 Kayıt Ol
               </h3>
@@ -91,12 +93,19 @@ console.log("Anlık Şifre State'i:", password);
                 </button>
               </form>
               <a
-                href="#"
-                id="linkGirisYap"
-                className="text-sm text-center text-gray-800 hover:underline"
-                >Zaten hesabınız var mı? Giriş yapın</a
-              >
-            </div>
+  href="#"
+  onClick={(e) => { 
+    e.preventDefault(); 
+    setIsLoginView(true); 
+  }}
+  className="text-sm text-center text-gray-800 hover:underline"
+>
+  Zaten hesabınız var mı? Giriş yapın
+</a>
+            </div>) }
+            
+  
+            
           </div>
         </div>
       </div>
