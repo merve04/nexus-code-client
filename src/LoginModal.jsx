@@ -1,34 +1,38 @@
-
-import {useState} from "react"; 
-function LoginModal({ setIsModalOpen }) {
-    const [email,setEmail] = useState("");
-    const [password,setPassword] = useState("");
-    const [isLoginView,setIsLoginView] = useState("true");
-    const handleSubmit = (e) => {
-      e.preventDefault();
-      console.log("Sunucuya Gönderilecek E-Posta:", email);
+import { useState } from "react";
+function LoginModal({ setIsModalOpen, setLoggedInUser }) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [isLoginView, setIsLoginView] = useState(true);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Sunucuya Gönderilecek E-Posta:", email);
     console.log("Sunucuya Gönderilecek Şifre:", password);
-    };
-    console.log("Anlık Email State'i:", email);
-console.log("Anlık Şifre State'i:", password);
-    return(
-        <div id="girisKutusu" className="fixed  z-50 inset-0 bg-black/80">
-        <div className="flex justify-center items-center w-full h-full">
-          <div
-            className="relative bg-[#bfb7a9] p-10 rounded-3xl flex flex-col items-center w-96"
-          >
-            <button
+    setLoggedInUser(email);
+    setIsModalOpen(false);
+  };
+  console.log("Anlık Email State'i:", email);
+  console.log("Anlık Şifre State'i:", password);
+
+  return (
+    <div id="girisKutusu" className="fixed  z-50 inset-0 bg-black/80">
+      <div className="flex justify-center items-center w-full h-full">
+        <div className="relative bg-[#bfb7a9] p-10 rounded-3xl flex flex-col items-center w-96">
+          <button
             onClick={() => setIsModalOpen(false)}
-              id="kapatmaTusu"
-              className="absolute top-4 right-5 text-3xl font-bold text-gray-900 hover:text-red-600 transition-colors"
-            >
-              X
-            </button>
-  {isLoginView ? (<div id="alanGiris" className="w-full flex flex-col items-center">
+            id="kapatmaTusu"
+            className="absolute top-4 right-5 text-3xl font-bold text-gray-900 hover:text-red-600 transition-colors"
+          >
+            X
+          </button>
+          {isLoginView ? (
+            <div id="alanGiris" className="w-full flex flex-col items-center">
               <h3 className="text-3xl font-bold mb-6 text-gray-900 font-[monaco]">
                 Giriş Yap
               </h3>
-              <form className="flex flex-col gap-4 w-full mb-8">
+              <form
+                onSubmit={handleSubmit}
+                className="flex flex-col gap-4 w-full mb-8"
+              >
                 <input
                   type="email"
                   value={email}
@@ -36,7 +40,7 @@ console.log("Anlık Şifre State'i:", password);
                   placeholder="Kullanıcı Adı"
                   className="p-3 rounded-xl outline-none"
                 />
-  
+
                 <input
                   type="password"
                   value={password}
@@ -44,7 +48,7 @@ console.log("Anlık Şifre State'i:", password);
                   placeholder="Şifrenizi Giriniz"
                   className="p-3 rounded-xl outline-none"
                 />
-  
+
                 <button
                   id="girisGonder"
                   type="submit"
@@ -54,20 +58,25 @@ console.log("Anlık Şifre State'i:", password);
                 </button>
               </form>
               <a
-  href="#"
-  onClick={(e) => { 
-    e.preventDefault(); 
-    setIsLoginView(false); 
-  }}
-  className="text-sm text-center text-gray-800 hover:underline"
->
-  Hesabınız yoksa oluşturun
-</a>
-            </div> ):(<div id="alanKayit" className="w-full flex-col items-center">
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setIsLoginView(false);
+                }}
+                className="text-sm text-center text-gray-800 hover:underline"
+              >
+                Hesabınız yoksa oluşturun
+              </a>
+            </div>
+          ) : (
+            <div id="alanKayit" className="w-full flex-col items-center">
               <h3 className="text-3xl font-bold mb-6 text-gray-900 font-[monaco]">
                 Kayıt Ol
               </h3>
-              <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-full mb-8">
+              <form
+                onSubmit={handleSubmit}
+                className="flex flex-col gap-4 w-full mb-8"
+              >
                 <input
                   type="email"
                   id="kullaniciKayit"
@@ -93,22 +102,20 @@ console.log("Anlık Şifre State'i:", password);
                 </button>
               </form>
               <a
-  href="#"
-  onClick={(e) => { 
-    e.preventDefault(); 
-    setIsLoginView(true); 
-  }}
-  className="text-sm text-center text-gray-800 hover:underline"
->
-  Zaten hesabınız var mı? Giriş yapın
-</a>
-            </div>) }
-            
-  
-            
-          </div>
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setIsLoginView(true);
+                }}
+                className="text-sm text-center text-gray-800 hover:underline"
+              >
+                Zaten hesabınız var mı? Giriş yapın
+              </a>
+            </div>
+          )}
         </div>
       </div>
-    );
+    </div>
+  );
 }
 export default LoginModal;
