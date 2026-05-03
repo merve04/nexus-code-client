@@ -1,3 +1,5 @@
+import Ozellikler from "./Ozellikler";
+
 function Main() {
   return (
     <main className="mt-36 px-10">
@@ -22,18 +24,7 @@ function Main() {
         <img src="/github.png" className="max-w-6xl" />
       </div>
 
-      <h2
-        id="ozelliklerBaslik"
-        className="text-center text-[#bfb7a9] text-6xl mb-6 font-[monaco]"
-      >
-        Özellikler
-      </h2>
-      <h3 className="text-[#edecec] text-center text-2xl font-[monaco] mb-40">
-        Takımınızla projeler geliştirirken ihtiyacınız olan tüm araçlar elinizin
-        altında. Kurulum yok, gecikme yok.
-      </h3>
-
-      <div id="ozelliklerKutusu" className="grid grid-cols-3 gap-8 mb-40"></div>
+      <Ozellikler />
 
       <div className="bg-[#bfb7a9] flex items-center mb-40 rounded-2xl">
         <div className="md:w-3/5 ml-5">
