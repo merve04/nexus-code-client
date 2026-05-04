@@ -1,8 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import DegerKarti from "./DegerKarti";
 
 function Hakkimizda() {
   const [detayGoster, setDetayGoster] = useState(false);
+  useEffect(() => {
+    console.log("Hakkımızda sayfası DOM'a başarıyla eklendi (Mounted).");
+  }, []);
+  useEffect(() => {
+    console.log(
+      "Detay gösterme durumu güncellendi (Updated). Yeni değer: ",
+      detayGoster,
+    );
+  }, [detayGoster]);
+
   const degerlerListesi = [
     {
       id: 1,
@@ -23,6 +33,15 @@ function Hakkimizda() {
         "Karmaşık sorunları temiz kod (clean code) ile çözmek, sürekli öğrenmek ve her zaman en iyi kullanıcı deneyimini (UX) sunmak için çalışmak.",
     },
   ];
+  useEffect(() => {
+    console.log("Hakkımızda sayfası DOM'a başarıyla eklendi (Mounted).");
+  }, []);
+  useEffect(() => {
+    console.log(
+      "Detay gösterme durumu güncellendi (Updated). Yeni değer: ",
+      detayGoster,
+    );
+  }, [detayGoster]);
 
   return (
     <div className="py-20 px-10 text-white flex flex-col items-center">

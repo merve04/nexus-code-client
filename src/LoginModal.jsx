@@ -1,20 +1,50 @@
 import { useState } from "react";
+
 function LoginModal({ setIsModalOpen, setLoggedInUser }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoginView, setIsLoginView] = useState(true);
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Sunucuya Gönderilecek E-Posta:", email);
-    console.log("Sunucuya Gönderilecek Şifre:", password);
-    setLoggedInUser(email);
-    setIsModalOpen(false);
-  };
-  console.log("Anlık Email State'i:", email);
-  console.log("Anlık Şifre State'i:", password);
 
+  // GÖNDERİM FONKSİYONU (Pırıl pırıl, tek parça)
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const userData = {
+      email: email,
+      password: password,
+      action: isLoginView ? "login" : "register",
+    };
+
+    try {
+      console.log("Sunucuya istek atılıyor. Lütfen bekleyin...");
+      console.log("Giden Paket:", userData);
+
+      const response = await fetch(
+        "https://jsonplaceholder.typicode.com/posts",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(userData),
+        },
+      );
+
+      const data = await response.json();
+      console.log("Sunucudan Başarılı Cevap Geldi:", data);
+
+      // İşlem başarılıysa giriş yap ve ekranı kapat
+      setLoggedInUser(email);
+      setIsModalOpen(false);
+    } catch (error) {
+      console.error("Eyvah, sunucuya bağlanırken bir hata oluştu:", error);
+      alert("Bağlantı hatası! Lütfen internetinizi kontrol edin.");
+    }
+  };
+
+  // EKRAN ÇİZİMİ (UI)
   return (
-    <div id="girisKutusu" className="fixed  z-50 inset-0 bg-black/80">
+    <div id="girisKutusu" className="fixed z-50 inset-0 bg-black/80">
       <div className="flex justify-center items-center w-full h-full">
         <div className="relative bg-[#bfb7a9] p-10 rounded-3xl flex flex-col items-center w-96">
           <button
@@ -24,6 +54,7 @@ function LoginModal({ setIsModalOpen, setLoggedInUser }) {
           >
             X
           </button>
+
           {isLoginView ? (
             <div id="alanGiris" className="w-full flex flex-col items-center">
               <h3 className="text-3xl font-bold mb-6 text-gray-900 font-[monaco]">
@@ -40,7 +71,6 @@ function LoginModal({ setIsModalOpen, setLoggedInUser }) {
                   placeholder="Kullanıcı Adı"
                   className="p-3 rounded-xl outline-none"
                 />
-
                 <input
                   type="password"
                   value={password}
@@ -48,9 +78,7 @@ function LoginModal({ setIsModalOpen, setLoggedInUser }) {
                   placeholder="Şifrenizi Giriniz"
                   className="p-3 rounded-xl outline-none"
                 />
-
                 <button
-                  id="girisGonder"
                   type="submit"
                   className="bg-[#08090a] text-white p-3 rounded-xl font-bold hover:bg-gray-800"
                 >
@@ -79,22 +107,19 @@ function LoginModal({ setIsModalOpen, setLoggedInUser }) {
               >
                 <input
                   type="email"
-                  id="kullaniciKayit"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   placeholder="E-posta Adresiniz"
                   className="p-3 rounded-xl outline-none"
                 />
                 <input
                   type="password"
-                  id="sifreKayit"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   placeholder="Şifre Oluşturun"
                   className="p-3 rounded-xl outline-none"
                 />
-                <p
-                  id="hataMesajSifre"
-                  className="hidden border-2 border-amber-950 rounded-3xl p-2"
-                ></p>
                 <button
-                  id="kayitGonder"
                   type="submit"
                   className="bg-[#08090a] text-white p-3 rounded-xl font-bold hover:bg-gray-800"
                 >
@@ -118,4 +143,5 @@ function LoginModal({ setIsModalOpen, setLoggedInUser }) {
     </div>
   );
 }
+
 export default LoginModal;
